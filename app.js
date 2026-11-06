@@ -1,4 +1,4 @@
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+const API_URL = 'https://jsonplaceholder.typicode.com/postsz';
 
 const loadBtn = document.getElementById('loadBtn');
 const postsList = document.getElementById('postsList');
@@ -48,9 +48,10 @@ async function loadPosts() {
     loadBtn.disabled = true;
     clearMessages();
     showMessage('Загрузка публикаций…', 'info');
+    let response;
 
     try {
-        const response = await fetch(`${API_URL}?_limit=5`);
+        response = await fetch(`${API_URL}?_limit=5`);
 
         if (!response.ok) {
             throw new Error(`Не удалось загрузить публикации (HTTP ${response.status})`);
@@ -60,7 +61,7 @@ async function loadPosts() {
         renderPosts(posts);
 
         clearMessages();
-        showMessage(`Загружено публикаций: ${posts.length}`, 'success');
+        showMessage(`Загружено публикаций: ${posts.length}, HTTP: ${response.status}`, 'success');
     } catch (error) {
         clearMessages();
         showMessage(`Ошибка загрузки: ${error.message}`, 'error');
@@ -92,7 +93,7 @@ async function sendPost(data) {
         const created = await response.json();
 
         clearMessages();
-        showMessage(`Публикация создана. ID: ${created.id}`, 'success');
+        showMessage(`Публикация создана. ID: ${created.id}, HTTP: ${response.status}`, 'success');
         showMessage(`Заголовок: ${created.title}`, 'success');
         showMessage(`Текст: ${created.body}`, 'success');
 
