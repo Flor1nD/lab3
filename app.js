@@ -92,6 +92,7 @@ async function sendPost(data) {
 
         const created = await response.json();
 
+
         clearMessages();
         showMessage(`Публикация создана. ID: ${created.id}, HTTP: ${response.status}`, 'success');
         showMessage(`Заголовок: ${created.title}`, 'success');
